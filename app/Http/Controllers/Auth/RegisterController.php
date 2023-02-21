@@ -25,6 +25,7 @@ class RegisterController extends Controller
             'password' => 'required|confirmed',
         ]);
 
+        //Store User
         //make use of the model/user.php
         User::create([
             'name' => $request->name,
@@ -33,10 +34,12 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        //Store User
-
         //Sign the User In
+        auth()->attempt($request->only('email', 'password'));
 
         //Redirect
+        return redirect()->route('dashboard');
+
+
     }
 }
